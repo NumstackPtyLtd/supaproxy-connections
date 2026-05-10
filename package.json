@@ -1,7 +1,7 @@
 {
   "name": "@supaproxy/connections",
-  "version": "0.1.1",
-  "description": "Plugin package for SupaProxy MCP connection types",
+  "version": "0.2.0",
+  "description": "Connection plugin SDK for SupaProxy. Defines interfaces for building custom MCP connection types.",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -9,6 +9,10 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
+    },
+    "./plugins": {
+      "types": "./dist/plugins.d.ts",
+      "import": "./dist/plugins.js"
     }
   },
   "scripts": {
