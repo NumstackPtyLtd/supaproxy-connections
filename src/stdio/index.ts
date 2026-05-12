@@ -20,11 +20,16 @@ class StdioMcpConnection implements McpConnection {
   }
 }
 
-async function connectStdio(command: string, args: string[], clientName: string): Promise<{ connection: StdioMcpConnection }> {
+async function connectStdio(
+  command: string,
+  args: string[],
+  clientName: string,
+  env?: Record<string, string>,
+): Promise<{ connection: StdioMcpConnection }> {
   const transport = new StdioClientTransport({
     command,
     args,
-    env: process.env as Record<string, string>,
+    env: { ...process.env, ...(env || {}) } as Record<string, string>,
   })
 
   const client = new Client({ name: clientName, version: '1.0.0' })
@@ -50,13 +55,15 @@ export const stdioPlugin: ConnectionPlugin = {
       { name: 'name', label: 'Connection name', type: 'text', required: true, placeholder: 'order-service', helpText: 'A short identifier for this connection' },
       { name: 'command', label: 'Command', type: 'text', required: true, placeholder: 'node', helpText: 'The executable to spawn the MCP server process' },
       { name: 'args', label: 'Arguments', type: 'text', required: false, placeholder: '/opt/services/order-mcp/index.js', helpText: 'Space-separated arguments' },
+      { name: 'env', label: 'Environment', type: 'text', required: false, placeholder: '{"API_KEY": "..."}', helpText: 'Optional JSON object of environment variables' },
     ],
   },
 
   async test(config): Promise<TestResult> {
     try {
       const args = (config.args || '').split(/\s+/).filter(Boolean)
-      const { connection } = await connectStdio(config.command, args, 'supaproxy-test')
+      const env = config.env ? JSON.parse(config.env) as Record<string, string> : undefined
+      const { connection } = await connectStdio(config.command, args, 'supaproxy-test', env)
       const result: TestResult = { ok: true, tools: connection.tools.length, toolNames: connection.tools.map(t => t.name) }
       await connection.close()
       return result
@@ -67,7 +74,8 @@ export const stdioPlugin: ConnectionPlugin = {
 
   async connect(config): Promise<McpConnection> {
     const args = (config.args || '').split(/\s+/).filter(Boolean)
-    const { connection } = await connectStdio(config.command, args, config.name || 'supaproxy')
+    const env = config.env ? JSON.parse(config.env) as Record<string, string> : undefined
+    const { connection } = await connectStdio(config.command, args, config.name || 'supaproxy', env)
     return connection
   },
 }
