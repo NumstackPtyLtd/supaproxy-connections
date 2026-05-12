@@ -8,7 +8,7 @@ interface JsonRpcResponse {
   jsonrpc: string
   id: number
   result?: Record<string, unknown>
-  error?: { message: string; code?: number }
+  error?: string | { message: string; code?: number }
 }
 
 interface HttpConnectionOptions {
@@ -35,7 +35,10 @@ async function jsonRpc(
   })
   if (!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText}`)
   const data = await res.json() as JsonRpcResponse
-  if (data.error) throw new Error(`MCP error: ${data.error.message}`)
+  if (data.error) {
+    const msg = typeof data.error === 'string' ? data.error : data.error.message || JSON.stringify(data.error)
+    throw new Error(`MCP error: ${msg}`)
+  }
   return data.result || {}
 }
 
