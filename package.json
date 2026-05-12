@@ -1,6 +1,6 @@
 {
   "name": "@supaproxy/connections",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Connection plugin SDK for SupaProxy. Defines interfaces for building custom MCP connection types.",
   "type": "module",
   "main": "dist/index.js",
