@@ -39,7 +39,7 @@ export interface TestResult {
 }
 
 /**
- * ConnectionPlugin — the contract every connection type must implement.
+ * ConnectionPlugin: the contract every connection type must implement.
  *
  * Adding a new connection type = one file implementing this interface.
  * The dashboard auto-discovers connection types via the registry.
@@ -54,7 +54,7 @@ export interface ConnectionPlugin {
   /** Short description. */
   readonly description: string
 
-  /** Config schema — dashboard renders forms from this. */
+  /** Config schema: dashboard renders forms from this. */
   readonly configSchema: { fields: ConfigField[] }
 
   /** Test connectivity and discover tools. */
