@@ -2,7 +2,7 @@ import type { ConnectionPlugin, McpConnection, TestResult } from '../types.js'
 import { httpPlugin } from '../http/index.js'
 
 /**
- * Authenticated HTTP connection — wraps the base HTTP plugin
+ * Authenticated HTTP connection: wraps the base HTTP plugin
  * with auth header injection (Bearer, API key, or custom header).
  */
 export const authenticatedPlugin: ConnectionPlugin = {

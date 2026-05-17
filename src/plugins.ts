@@ -1,4 +1,4 @@
-// Built-in plugins — import this to auto-register http, stdio, authenticated
+// Built-in plugins: import this to auto-register http, stdio, authenticated
 export { httpPlugin } from './http/index.js'
 export { stdioPlugin } from './stdio/index.js'
 export { authenticatedPlugin } from './authenticated/index.js'

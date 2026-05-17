@@ -1,4 +1,4 @@
-// Types — the public interface for building custom connection plugins
+// Types: the public interface for building custom connection plugins
 export type {
   ConnectionPlugin,
   McpConnection,
@@ -8,5 +8,5 @@ export type {
   ConfigField,
 } from './types.js'
 
-// Registry — register and discover connection plugins
+// Registry: register and discover connection plugins
 export { registry } from './registry.js'
