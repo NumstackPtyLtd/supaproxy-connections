@@ -1,5 +1,7 @@
 # @supaproxy/connections
 
+Central governance hub: [supaproxy](https://github.com/NumstackPtyLtd/supaproxy)
+
 Plugin package for SupaProxy MCP connection types. Each connection type implements the `ConnectionPlugin` interface.
 
 ## Architecture
