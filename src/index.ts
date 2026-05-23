@@ -8,5 +8,8 @@ export type {
   ConfigField,
 } from './types.js'
 
+// Errors: typed error classes for connection operations
+export { PluginNotFoundError } from './errors.js'
+
 // Registry: register and discover connection plugins
 export { registry } from './registry.js'

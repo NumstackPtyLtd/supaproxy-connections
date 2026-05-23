@@ -74,7 +74,9 @@ export const stdioPlugin: ConnectionPlugin = {
 
   async connect(config): Promise<McpConnection> {
     const args = (config.args || '').split(/\s+/).filter(Boolean)
-    const env = config.env ? JSON.parse(config.env) as Record<string, string> : undefined
+    const env = config.env
+      ? (() => { try { return JSON.parse(config.env) as Record<string, string> } catch { return undefined } })()
+      : undefined
     const { connection } = await connectStdio(config.command, args, config.name || 'supaproxy', env)
     return connection
   },

@@ -1,5 +1,6 @@
 import pino from 'pino'
 import type { ConnectionPlugin } from './types.js'
+import { PluginNotFoundError } from './errors.js'
 
 const log = pino({ name: 'connection-registry' })
 
@@ -17,7 +18,7 @@ class PluginRegistry {
 
   get(type: string): ConnectionPlugin {
     const plugin = this.plugins.get(type)
-    if (!plugin) throw new Error(`Connection plugin not found: ${type}`)
+    if (!plugin) throw new PluginNotFoundError(type)
     return plugin
   }
 
