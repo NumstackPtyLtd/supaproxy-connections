@@ -122,7 +122,11 @@ export const httpPlugin: ConnectionPlugin = {
       const { tools, server } = await initAndListTools(config.url, headers, 'supaproxy-test', timeoutMs)
       return { ok: true, tools: tools.length, server, toolNames: tools.map(t => t.name) }
     } catch (err) {
-      return { ok: false, error: `Connection failed: ${(err as Error).message}` }
+      const raw = (err as Error).message
+      const error = raw === 'fetch failed'
+        ? 'Could not reach the server. Check that the URL is correct and the service is running.'
+        : `Connection failed: ${raw}`
+      return { ok: false, error }
     }
   },
 
